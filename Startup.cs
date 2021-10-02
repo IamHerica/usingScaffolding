@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using usingScaffolding.Controllers;
 using usingScaffolding.Data;
 
-namespace testeGuilherme
+namespace usingScaffolding
 {
     public class Startup
     {
