@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using usingScaffolding.Data;
+using usingScaffolding.DTOs;
 using usingScaffolding.Models;
 
 namespace usingScaffolding.Controllers
@@ -47,7 +46,7 @@ namespace usingScaffolding.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduto(int id, Produto produto)
         {
-            if (id != produto.id)
+            if (id != produto.Id)
             {
                 return BadRequest();
             }
@@ -64,10 +63,8 @@ namespace usingScaffolding.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return NoContent();
@@ -76,12 +73,18 @@ namespace usingScaffolding.Controllers
         // POST: api/Produtos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Produto>> PostProduto(Produto produto)
+        public async Task<ActionResult<Produto>> PostProduto(ProdutoPostDTO produto)
         {
-            _context.Produtos.Add(produto);
+            var produtoEntity = new Produto
+            {
+                Especie = produto.Especie,
+                Quantidade = produto.Quantidade,
+                Valor = produto.Valor
+            };
+            _context.Produtos.Add(produtoEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduto", new { produto.id }, produto);
+            return CreatedAtAction("GetProduto", new { produtoEntity.Id }, produtoEntity);
         }
 
         // DELETE: api/Produtos/5
@@ -102,7 +105,7 @@ namespace usingScaffolding.Controllers
 
         private bool ProdutoExists(int id)
         {
-            return _context.Produtos.Any(e => e.id == id);
+            return _context.Produtos.Any(e => e.Id == id);
         }
     }
 }

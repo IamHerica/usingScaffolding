@@ -1,10 +1,13 @@
-﻿namespace usingScaffolding.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace usingScaffolding.Models
 {
     public class Produto
     {
-        public int id { get; set; }
-        public string especie { get; set; }
-        public int quantidade { get; set; }
-        public double valor { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public string Especie { get; set; }
+        public int Quantidade { get; set; }
+        public double Valor { get; set; }
     }
 }
